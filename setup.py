@@ -28,14 +28,14 @@ def create_team():
         payload = {
             "name": team['name'],
             "display_name": team['name'],
-            "group_ids": ["participants"],
+            "group_ids": [team['category']], # category
             "organization_id": "1",
             "id": str(base_team_id + counter),
         }
         print("creating team: ", payload)
         try:
             teams.append(payload)
-            ret.append({"team_id": str(base_team_id + counter), "name": team['name']})
+            ret.append({"team_id": str(base_team_id + counter), "name": team['name'], "category": team['category']})
             counter += 1
 
         except Exception as e:
@@ -68,14 +68,17 @@ def create_account(team_info):
     with open('accounts.json', 'w', encoding='utf-8') as f:
         json.dump(accounts, f, indent=4, ensure_ascii=False)
 
+    for i in range(len(accounts)):
+        accounts[i]['category'] = team_info[i]['category']
+
     # save some information for later use in the competition, e.g., team_id, username, password
     # file format: team_id, name, username, password, into a .csv file
     with open('account_info.csv', 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['team_id', 'name', 'username', 'password']
+        fieldnames = ['team_id', 'category', 'name', 'username', 'password']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for team in accounts:
-            writer.writerow({'team_id': team['team_id'], 'name': team['name'], 'username': team['username'], 'password': team['password']})
+            writer.writerow({'team_id': team['team_id'], 'category': team['category'], 'name': team['name'], 'username': team['username'], 'password': team['password']})
 
     print("account creation done")
     print("account information saved in account_info.csv")
