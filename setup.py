@@ -9,6 +9,12 @@ base_team_id = 1000
 # generate password
 def generate_password(length):
     letters = string.ascii_letters + string.digits
+
+    # 移除容易混淆的字元 (0, O, o, 1, l, I)
+    easy_confuse = "0Oo1lI"
+    for c in easy_confuse:
+        letters = letters.replace(c, '')
+
     return ''.join(random.choice(letters) for i in range(length))
 
 # create team
@@ -27,9 +33,9 @@ def create_team():
     for team in data:
         payload = {
             "name": team['name'],
-            "display_name": team['name'],
+            "display_name": "team_" + str(base_team_id + counter),
             "group_ids": [team['category']], # category
-            "organization_id": "1",
+            "organization_id": "CCU",
             "id": str(base_team_id + counter),
         }
         print("creating team: ", payload)
@@ -54,7 +60,7 @@ def create_account(team_info):
         payload = {
             "id": team['team_id'],
             "username": "team" + team['team_id'],
-            "password": generate_password(10),
+            "password": generate_password(14),
             "type": "team",
             "team_id": team['team_id'],
             "name": team['name']
