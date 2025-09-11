@@ -34,8 +34,7 @@ def create_team():
         payload = {
             "name": team['name'],
             "display_name": "team_" + str(base_team_id + counter),
-            "group_ids": [team['category']], # category
-            "organization_id": "CCU",
+            "group_ids": [team['category']], # category is INT
             "id": str(base_team_id + counter),
         }
         print("creating team: ", payload)
@@ -60,7 +59,7 @@ def create_account(team_info):
         payload = {
             "id": team['team_id'],
             "username": "team" + team['team_id'],
-            "password": generate_password(14),
+            "password": generate_password(10),
             "type": "team",
             "team_id": team['team_id'],
             "name": team['name']
@@ -80,11 +79,11 @@ def create_account(team_info):
     # save some information for later use in the competition, e.g., team_id, username, password
     # file format: team_id, name, username, password, into a .csv file
     with open('account_info.csv', 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['team_id', 'category', 'name', 'username', 'password']
+        fieldnames = ['id', 'category', 'name', 'username', 'password']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for team in accounts:
-            writer.writerow({'team_id': team['team_id'], 'category': team['category'], 'name': team['name'], 'username': team['username'], 'password': team['password']})
+            writer.writerow({'id': team['id'], 'category': team['category'], 'name': team['name'], 'username': team['username'], 'password': team['password']})
 
     print("account creation done")
     print("account information saved in account_info.csv")

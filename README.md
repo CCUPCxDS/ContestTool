@@ -8,16 +8,21 @@ Specifically, this tool is designed to generate two json file for importing into
 
 ## Usage
 
+Please setup `datasource` in jury page > configuration settings > external systems to `configuration data external` before you import the teams, and accounts.
+
+![](./datasource.png)
+
+Then, you need to fill the info of `team.csv` (copy from `sample_team.csv`), the category row must be the external ID of specific category.
+
+![](./category.png)
+
+Run the command
+
 ```bash
 python setup.py
 ```
 
-Secondly, you need to import the generated json files (teams.json and accounts.json) into the DOMjudge system.
+Secondly, you need to import the generated json files (teams.json and accounts.json respectly) into the DOMjudge system.
 
-## Note
+`account_info.csv` is for you to check the password of the users.
 
-If you don't set the `datasource` in the config page of DOMjudge, you will get an error.
-
-Please set the `datasource` to `configuration data external` in the config page of DOMjudge.
-
-![](./datasource.png)
