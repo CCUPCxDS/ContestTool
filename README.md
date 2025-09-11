@@ -26,3 +26,4 @@ Secondly, you need to import the generated json files (teams.json and accounts.j
 
 `account_info.csv` is for you to check the password of the users.
 
+After the importing, remeber to switch the datasource back to `local`.
